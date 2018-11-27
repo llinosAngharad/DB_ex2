@@ -1,7 +1,6 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PartyCompany {
     static String dbAddress = "jdbc.postgresql://mod-intro-databases/";
@@ -66,6 +65,16 @@ public class PartyCompany {
         } catch(SQLException e){
             e.printStackTrace();
         }
+
+    }
+
+    private static void createTestData(){
+        List<Integer> pidList = new ArrayList<>();
+        List<Integer> midList = new ArrayList<>();
+        List<Integer> vidList = new ArrayList<>();
+        List<Integer> eidList = new ArrayList<>();
+        List<Integer> customerNamesList = new ArrayList<>();
+        List<Integer> venueNamesList = new ArrayList<>();
 
     }
 
