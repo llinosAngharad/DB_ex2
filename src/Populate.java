@@ -2,7 +2,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Random;
 
 class Populate {
 
@@ -39,22 +40,22 @@ class Populate {
             Statement stmt= c.createStatement();
 
             String SQLCreateVenue = "CREATE TABLE Venue(\n" +
-                    "    vid         SERIAL          PRIMARY KEY,\n" +
-                    "    name        CHAR(20)        NOT NULL,\n" +
-                    "    venuecost   NUMERIC(10, 2)  NOT NULL CHECK (venuecost > 0),\n" +
-                    "    maxcapacity INTEGER         NOT NULL CHECK (maxcapacity > 0)\n" +
+                    "    vid         SERIAL  PRIMARY KEY,\n" +
+                    "    name        CHAR(20)    NOT NULL,\n" +
+                    "    venuecost   INTEGER     NOT NULL CHECK (venuecost > 0),\n" +
+                    "    maxcapacity INTEGER     NOT NULL CHECK (maxcapacity > 0)\n" +
                     ")";
 
             String SQLCreateMenu = 	"CREATE TABLE Menu(\n" +
-                    "    mid             SERIAL          PRIMARY KEY,\n" +
-                    "    description     CHAR(100)       NOT NULL,\n" +
-                    "    costprice       NUMERIC(10, 2)  NOT NULL CHECK (costprice > 0)\n" +
+                    "    mid             SERIAL      PRIMARY KEY,\n" +
+                    "    description     CHAR(100)   NOT NULL,\n" +
+                    "    costprice       INTEGER     NOT NULL CHECK (costprice > 0)\n" +
                     ")";
 
             String SQLCreateEntertainment = "CREATE TABLE Entertainment(\n" +
                     "    eid             SERIAL          PRIMARY KEY,\n" +
                     "    description     CHAR(100)       NOT NULL,\n" +
-                    "    costprice       NUMERIC(10, 2)  NOT NULL CHECK (costprice > 0)\n" +
+                    "    costprice       INTEGER         NOT NULL CHECK (costprice > 0)\n" +
                     ")";
 
             String SQLCreateParty = "CREATE TABLE Party(\n" +
@@ -63,7 +64,7 @@ class Populate {
                     "    mid                 INTEGER         NOT NULL,\n" +
                     "    vid                 INTEGER         NOT NULL,\n" +
                     "    eid                 INTEGER         NOT NULL,\n" +
-                    "    price               NUMERIC(10, 2)  NOT NULL CHECK (price >= 0),\n" +
+                    "    price               INTEGER         NOT NULL CHECK (price >= 0)\n" +
                     "    timing              DATE            NOT NULL,\n" +
                     "    numberofguests      INTEGER         NOT NULL CHECK (numberofguests >= 0),\n" +
                     "\n" +
@@ -86,13 +87,27 @@ class Populate {
 
     }
 
-    private static void createTestData(){
-        List<Integer> pidList = new ArrayList<>();
-        List<Integer> midList = new ArrayList<>();
-        List<Integer> vidList = new ArrayList<>();
-        List<Integer> eidList = new ArrayList<>();
-        List<Integer> customerNamesList = new ArrayList<>();
-        List<Integer> venueNamesList = new ArrayList<>();
+    void createTestData(Connection c) {
+        try {
+            Statement stmt = c.createStatement();
+            ArrayList<String> venueNameList = new ArrayList<>(Arrays.asList("Guild of Students", "O2 Academy", "The Jam House", "The Bristol Pear", "Ikon Gallery", "Hare & Hounds",
+                    "Birmingham Town Hall", "Party Central", "NEC", "The S'Oak"));
 
+            for (int i = 0; i < 100; i++) {
+                Random rand = new Random();
+
+                String venueName = venueNameList.get(rand.nextInt(10));
+                int venueCost = rand.nextInt(1000);
+                int maxCapacity = rand.nextInt(250);
+
+                String SQLInsertValue = "INSERT INTO\n" +
+                        "    Venue (name, venuecost, maxapacity)\n" +
+                        "    VALUES (venueName, venueCost, maxCapacity)";
+
+                stmt.execute(SQLInsertValue);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

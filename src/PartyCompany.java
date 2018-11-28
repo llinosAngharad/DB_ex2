@@ -7,6 +7,7 @@ public class PartyCompany {
             Connection c = connect.getConnection();
             p.dropTables(c);
             p.createTables(c);
+            p.createTestData(c);
 
         }catch(SQLException e){
             e.printStackTrace();

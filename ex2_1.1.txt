@@ -4,7 +4,7 @@ CREATE TABLE Party(
     mid                 INTEGER         NOT NULL,
     vid                 INTEGER         NOT NULL,
     eid                 INTEGER         NOT NULL,
-    price               NUMERIC(10, 2)  NOT NULL CHECK (price >= 0)
+    price               INTEGER         NOT NULL CHECK (price >= 0)
     timing              DATE            NOT NULL,
     numberofguests      INTEGER         NOT NULL CHECK (numberofguests >= 0),
 
@@ -17,20 +17,24 @@ CREATE TABLE Party(
 )
 
 CREATE TABLE Venue(
-    vid         SERIAL          PRIMARY KEY,
-    name        CHAR(20)        NOT NULL,
-    venuecost   NUMERIC(10, 2)  NOT NULL CHECK (venuecost > 0),
-    maxcapacity INTEGER         NOT NULL CHECK (maxcapacity > 0)
+    vid         SERIAL  PRIMARY KEY,
+    name        CHAR(20)    NOT NULL,
+    venuecost   INTEGER     NOT NULL CHECK (venuecost > 0),
+    maxcapacity INTEGER     NOT NULL CHECK (maxcapacity > 0)
 )
 
 CREATE TABLE Menu(
-    mid             SERIAL          PRIMARY KEY,
-    description     CHAR(100)       NOT NULL,
-    costprice       NUMERIC(10, 2)  NOT NULL CHECK (costprice > 0)
+    mid             SERIAL      PRIMARY KEY,
+    description     CHAR(100)   NOT NULL,
+    costprice       INTEGER     NOT NULL CHECK (costprice > 0)
 )
 
 CREATE TABLE Entertainment(
     eid             SERIAL          PRIMARY KEY,
     description     CHAR(100)       NOT NULL,
-    costprice       NUMERIC(10, 2)  NOT NULL CHECK (costprice > 0)
+    costprice       INTEGER         NOT NULL CHECK (costprice > 0)
 )
+
+INSERT INTO
+    Venue (name, venuecost, maxapacity)
+    VALUES (venueName, venueCost, maxCapacity)
