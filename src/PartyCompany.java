@@ -12,62 +12,6 @@ public class PartyCompany {
         this.password = password;
     }
 
-    private Connection getConnection() throws SQLException{
-        Connection connection;
-//		String connectionString = "jdbc:postgresql://mod-intro-databases/lxw404";	// from lab
-        String connectionString = "jdbc:postgresql://mod-intro-databases.cs.bham.ac.uk/lxw404";	// from laptop
-        connection = DriverManager.getConnection(connectionString, this.userName, this.password);
-        return connection;
-    }
-
-    private static void createTables(Connection c){
-        try{
-            Statement stmt= c.createStatement();
-
-            String SQLCreateVenue = "CREATE TABLE Venue(" +
-                    "vid			INTEGER		PRIMARY KEY," +
-                    "name			CHAR(20)	NOT NULL," +
-                    "venue			DECIMAL		NOT NULL," +
-                    "maxcapacity	INTEGER		NOT NULL" +
-                    ")";
-
-            String SQLCreateMenu = 	"CREATE TABLE Menu(" +
-                    "mid			INTEGER		PRIMARY KEY," +
-                    "description	CHAR(100)	NOT NULL," +
-                    "costprice		DECIMAL		NOT NULL" +
-                    ")";
-
-            String SQLCreateEntertainment = "CREATE TABLE Entertainment(" +
-                    "eid			INTEGER		PRIMARY KEY," +
-                    "description	CHAR(100)	NOT NULL," +
-                    "costprice		DECIMAL		NOT NULL" +
-                    ")";
-
-            String SQLCreateParty = "CREATE TABLE Party(" +
-                    "pid			INTEGER		PRIMARY KEY," +
-                    "name			CHAR(20)	NOT NULL," +
-                    "mid			INTEGER		NOT NULL," +
-                    "vid			INTEGER		NOT NULL," +
-                    "eid			INTEGER		NOT NULL," +
-                    "price			DECIMAL		NOT NULL," +
-                    "timing			DATE		NOT NULL," +
-                    "FOREIGN KEY (mid) REFERENCES Menu(mid)" +
-                    "	ON UPDATE CASCADE," +
-                    "FOREIGN KEY(vid) REFERENCES Venue(vid)" +
-                    "	ON UPDATE CASCADE," +
-                    "FOREIGN KEY (eid) REFERENCES Entertainment(eid)" +
-                    "	ON UPDATE CASCADE)";
-
-            stmt.execute(SQLCreateVenue);
-            stmt.execute(SQLCreateMenu);
-            stmt.execute(SQLCreateEntertainment);
-            stmt.execute(SQLCreateParty);
-        } catch(SQLException e){
-            e.printStackTrace();
-        }
-
-    }
-
     private static void createTestData(){
         List<Integer> pidList = new ArrayList<>();
         List<Integer> midList = new ArrayList<>();
@@ -78,33 +22,96 @@ public class PartyCompany {
 
     }
 
-    private static void dropTables(Connection c){
+    private static void dropTables(Connection c) throws SQLException{
+        Statement stmt= c.createStatement();
+        String drop = "DROP TABLE ";
+
+        try{
+            stmt.execute(drop + " Party");
+        }catch(SQLException e){
+            System.out.println("Party table does not exist\n");
+        }
+        try{
+            stmt.execute(drop + " Venue");
+        }catch(SQLException e){
+            System.out.println("Venue table does not exist\n");
+        }
+        try{
+            stmt.execute(drop + " Menu");
+        }catch(SQLException e){
+            System.out.println("Menu table does not exist\n");
+        }
+        try{
+            stmt.execute(drop + " Entertainment");
+        }catch(SQLException e){
+            System.out.println("Entertainment table does not exist\n");
+        }
+        System.out.println("Tables cleared\n");
+
+    }
+
+    private static void createTables(Connection c){
         try{
             Statement stmt= c.createStatement();
 
-            String SQLDropVenue = "DROP TABLE Venue";
-            String SQLDropMenu = "DROP TABLE Menu";
-            String SQLDropEntertainment = "DROP TABLE Entertainment";
-            String SQLDropParty = "DROP TABLE Party";
+            String SQLCreateVenue = "CREATE TABLE Venue(\n" +
+                    "    vid         SERIAL          PRIMARY KEY,\n" +
+                    "    name        CHAR(20)        NOT NULL,\n" +
+                    "    venuecost   NUMERIC(10, 2)  NOT NULL CHECK (venuecost > 0),\n" +
+                    "    maxcapacity INTEGER         NOT NULL CHECK (maxcapacity > 0)\n" +
+                    ")";
 
-            stmt.execute(SQLDropParty);
-            stmt.execute(SQLDropEntertainment);
-            stmt.execute(SQLDropMenu);
-            stmt.execute(SQLDropVenue);
+            String SQLCreateMenu = 	"CREATE TABLE Menu(\n" +
+                    "    mid             SERIAL          PRIMARY KEY,\n" +
+                    "    description     CHAR(100)       NOT NULL,\n" +
+                    "    costprice       NUMERIC(10, 2)  NOT NULL CHECK (costprice > 0)\n" +
+                    ")";
 
-        }catch(SQLException e){
+            String SQLCreateEntertainment = "CREATE TABLE Entertainment(\n" +
+                    "    eid             SERIAL          PRIMARY KEY,\n" +
+                    "    description     CHAR(100)       NOT NULL,\n" +
+                    "    costprice       NUMERIC(10, 2)  NOT NULL CHECK (costprice > 0)\n" +
+                    ")";
+
+            String SQLCreateParty = "CREATE TABLE Party(\n" +
+                    "    pid                 SERIAL          PRIMARY KEY,\n" +
+                    "    name                CHAR(20)        NOT NULL,\n" +
+                    "    mid                 INTEGER         NOT NULL,\n" +
+                    "    vid                 INTEGER         NOT NULL,\n" +
+                    "    eid                 INTEGER         NOT NULL,\n" +
+                    "    price               NUMERIC(10, 2)  NOT NULL CHECK (price >= 0),\n" +
+                    "    timing              DATE            NOT NULL,\n" +
+                    "    numberofguests      INTEGER         NOT NULL CHECK (numberofguests >= 0),\n" +
+                    "\n" +
+                    "    FOREIGN KEY (mid) REFERENCES Menu(mid)\n" +
+                    "        ON UPDATE CASCADE,\n" +
+                    "    FOREIGN KEY (vid) REFERENCES Venue(vid)\n" +
+                    "        ON UPDATE CASCADE,\n" +
+                    "    FOREIGN KEY (eid) REFERENCES Entertainment(eid)\n" +
+                    "        ON UPDATE CASCADE\n" +
+                    ")";
+
+            stmt.execute(SQLCreateVenue);
+            stmt.execute(SQLCreateMenu);
+            stmt.execute(SQLCreateEntertainment);
+            stmt.execute(SQLCreateParty);
+            System.out.println("Tables created\n");
+        } catch(SQLException e){
             e.printStackTrace();
         }
+
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]){
         PartyCompany pc = new PartyCompany("lxw404", "6yl8m7fncq");
+        Connect connect = new Connect("lxw404", "6yl8m7fncq");
         try {
-            Connection con = pc.getConnection();
-            createTables(con);
-//            dropTables(con);
+            // Connection c = pc.getConnection();
+            Connection c = connect.getConnection();
+            dropTables(c);
+            createTables(c);
 
-        } catch(SQLException e){
+        }catch(SQLException e){
             e.printStackTrace();
         }
     }
