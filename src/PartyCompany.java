@@ -5,12 +5,8 @@ public class PartyCompany {
         Populate p = new Populate();
         try {
             Connection c = connect.getConnection();
-            p.dropTables(c);
-            p.createTables(c);
-            p.createTestVenues(c);
-            p.createTestMenus(c);
-            p.createTestEntertainment(c);
-            p.createTestParties(c);
+            p.populateTables(c);
+
 
         }catch(SQLException e){
             e.printStackTrace();

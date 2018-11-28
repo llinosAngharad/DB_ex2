@@ -209,4 +209,18 @@ class Populate {
             e.printStackTrace();
         }
     }
+
+    void populateTables(Connection c){
+        try{
+            dropTables(c);
+            createTables(c);
+            createTestVenues(c);
+            createTestMenus(c);
+            createTestEntertainment(c);
+            createTestParties(c);
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
