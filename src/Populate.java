@@ -90,7 +90,7 @@ class Populate {
 
     void createTestData(Connection c) {
         try {
-            String SQLInsertValue = "INSERT INTO Venue (name, venuecost, maxapacity) " +
+            String SQLInsertValue = "INSERT INTO Venue (name, venuecost, maxcapacity) " +
                     "VALUES (?, ?, ?)";
 
             PreparedStatement stmt = c.prepareStatement(SQLInsertValue);
@@ -107,8 +107,9 @@ class Populate {
                 stmt.setString(1, venueName);
                 stmt.setInt(2, venueCost);
                 stmt.setInt(3, maxCapacity);
-                stmt.executeUpdate(SQLInsertValue);
+                stmt.executeUpdate();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
