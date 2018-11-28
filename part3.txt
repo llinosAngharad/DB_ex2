@@ -1,0 +1,5 @@
+SELECT p.pid, p.name, v.vid INTO PartyReport
+FROM
+    Party p
+    INNER JOIN Venue v
+        ON p.vid = v.vid;

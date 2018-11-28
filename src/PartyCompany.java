@@ -7,6 +7,9 @@ public class PartyCompany {
             Connection c = connect.getConnection();
             p.populateTables(c);
 
+            PartyReport pr = new PartyReport(1);
+            pr.makeReport(c);
+
 
         }catch(SQLException e){
             e.printStackTrace();
