@@ -4,34 +4,59 @@ import java.sql.SQLException;
 
 public class PartyReport {
 
-    private int pid;
+    private int inputpid;
 
     public PartyReport(int pid){
-        this.pid = pid;
-    }
-
-    void dropReport(Connection c){
-        try{
-            String SQLdropReport = "DROP TABLE partyreport";
-            Statement stmt = c.createStatement();
-            stmt.executeUpdate(SQLdropReport);
-            System.out.println("\nPrevious party report deleted");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        inputpid = pid;
     }
 
     void makeReport(Connection c){
         try{
-            dropReport(c);
-            String SQLmakeReport = "SELECT p.pid, p.name, v.vid INTO PartyReport\n" +
-                    "FROM\n" +
-                    "    Party p\n" +
-                    "    INNER JOIN Venue v\n" +
-                    "        ON p.vid = v.vid";
-            PreparedStatement stmt = c.prepareStatement(SQLmakeReport);
-            stmt.execute();
-            System.out.println("Party report made");
+            Statement stmt = c.createStatement();
+            int nog = 0;
+            int partyPrice = 0;
+            int vPrice = 0;
+            int mPrice = 0;
+            int ePrice = 0;
+            ResultSet rs = stmt.executeQuery("SELECT pid, name, numberofguests, price" +
+                    "                              FROM Party" +
+                    "                              WHERE pid=" + inputpid);
+            System.out.println("\nPARTY REPORT:\n");
+            while(rs.next()){
+                System.out.println("Party ID: " + rs.getInt("pid"));
+                System.out.println("Party name: " + rs.getString("name"));
+                nog = rs.getInt("numberofguests");
+                partyPrice = rs.getInt("price");
+            }
+            rs = stmt.executeQuery("SELECT name, price\n" +
+                    "                    FROM Venue\n" +
+                    "                    WHERE vid IN(SELECT vid\n" +
+                    "                                FROM Party\n" +
+                    "                                WHERE pid =" + inputpid + ")");
+            while(rs.next()){
+                System.out.println("Venue name: " + rs.getString("name"));
+                vPrice = rs.getInt("price");
+
+            }
+            rs = stmt.executeQuery("SELECT description\n" +
+                    "                    FROM Menu\n" +
+                    "                    WHERE mid IN(SELECT mid\n" +
+                    "                                 FROM Party\n" +
+                    "                                 WHERE pid =" + inputpid + ")");
+            while(rs.next()){
+                System.out.println("Menu description: " + rs.getString("description"));
+            }
+            rs = stmt.executeQuery("SELECT description\n" +
+                    "                    FROM Entertainment\n" +
+                    "                    WHERE eid IN(SELECT eid\n" +
+                    "                                 FROM Party\n" +
+                    "                                 WHERE pid =" + inputpid + ")");
+            while(rs.next()){
+                System.out.println("Entertainment description: " + rs.getString("description"));
+            }
+            System.out.println("Number of guests:" + nog);
+            System.out.println("Price charged: £" + partyPrice);
+
         }catch(SQLException e){
             e.printStackTrace();
         }

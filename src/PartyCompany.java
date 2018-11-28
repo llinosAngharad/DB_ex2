@@ -5,7 +5,7 @@ public class PartyCompany {
         Populate p = new Populate();
         try {
             Connection c = connect.getConnection();
-            p.populateTables(c);
+//            p.populateTables(c);
 
             PartyReport pr = new PartyReport(1);
             pr.makeReport(c);
