@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ class Populate {
                     "    mid                 INTEGER         NOT NULL,\n" +
                     "    vid                 INTEGER         NOT NULL,\n" +
                     "    eid                 INTEGER         NOT NULL,\n" +
-                    "    price               INTEGER         NOT NULL CHECK (price >= 0)\n" +
+                    "    price               INTEGER         NOT NULL CHECK (price >= 0),\n" +
                     "    timing              DATE            NOT NULL,\n" +
                     "    numberofguests      INTEGER         NOT NULL CHECK (numberofguests >= 0),\n" +
                     "\n" +
@@ -89,7 +90,10 @@ class Populate {
 
     void createTestData(Connection c) {
         try {
-            Statement stmt = c.createStatement();
+            String SQLInsertValue = "INSERT INTO Venue (name, venuecost, maxapacity) " +
+                    "VALUES (?, ?, ?)";
+
+            PreparedStatement stmt = c.prepareStatement(SQLInsertValue);
             ArrayList<String> venueNameList = new ArrayList<>(Arrays.asList("Guild of Students", "O2 Academy", "The Jam House", "The Bristol Pear", "Ikon Gallery", "Hare & Hounds",
                     "Birmingham Town Hall", "Party Central", "NEC", "The S'Oak"));
 
@@ -100,11 +104,10 @@ class Populate {
                 int venueCost = rand.nextInt(1000);
                 int maxCapacity = rand.nextInt(250);
 
-                String SQLInsertValue = "INSERT INTO\n" +
-                        "    Venue (name, venuecost, maxapacity)\n" +
-                        "    VALUES (venueName, venueCost, maxCapacity)";
-
-                stmt.execute(SQLInsertValue);
+                stmt.setString(1, venueName);
+                stmt.setInt(2, venueCost);
+                stmt.setInt(3, maxCapacity);
+                stmt.executeUpdate(SQLInsertValue);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -4,7 +4,7 @@ CREATE TABLE Party(
     mid                 INTEGER         NOT NULL,
     vid                 INTEGER         NOT NULL,
     eid                 INTEGER         NOT NULL,
-    price               INTEGER         NOT NULL CHECK (price >= 0)
+    price               INTEGER         NOT NULL CHECK (price >= 0),
     timing              DATE            NOT NULL,
     numberofguests      INTEGER         NOT NULL CHECK (numberofguests >= 0),
 
@@ -34,7 +34,3 @@ CREATE TABLE Entertainment(
     description     CHAR(100)       NOT NULL,
     costprice       INTEGER         NOT NULL CHECK (costprice > 0)
 )
-
-INSERT INTO
-    Venue (name, venuecost, maxapacity)
-    VALUES (venueName, venueCost, maxCapacity)
