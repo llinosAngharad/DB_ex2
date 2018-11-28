@@ -1,0 +1,36 @@
+CREATE TABLE Party(
+    pid                 INTEGER     PRIMARY KEY,
+    name                CHAR(20)    NOT NULL,
+    mid                 INTEGER     NOT NULL,
+    vid                 INTEGER     NOT NULL,
+    eid                 INTEGER     NOT NULL,
+    price               DECIMAL     NOT NULL,
+    timing              DATETIME    NOT NULL,
+    numberofguests      INTEGER     CHECK (numberofguests <= Venue.maxcapacity),
+
+    FOREIGN KEY (mid) REFERENCES Menu(mid)
+        ON UPDATE CASCADE,
+    FOREIGN KEY (vid) REFERENCES Venue(vid)
+        ON UPDATE CASCADE,
+    FOREIGN KEY (eid) REFERENCES Entertainment(eid)
+        ON UPDATE CASCADE
+)
+
+CREATE TABLE Venue(
+    vid         INTEGER     PRIMARY KEY,
+    name        CHAR(20)    NOT NULL,
+    venuecost   DECIMAL     NOT NULL,
+    maxcapacity INTEGER     NOT NULL
+)
+
+CREATE TABLE Menu(
+    mid             INTEGER     PRIMARY KEY,
+    description     CHAR(100)   NOT NULL,
+    costprice       DECIMAL     NOT NULL
+)
+
+CREATE TABLE Entertainment(
+    eid             INTEGER     PRIMARY KEY,
+    description     CHAR(100)   NOT NULL,
+    costprice       DECIMAL     NOT NULL
+)
