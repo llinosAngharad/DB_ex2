@@ -8,8 +8,9 @@ class MenuReport {
         inputmid = mid;
     }
 
-    void makeReport(Connection c){
+    String makeReport(Connection c){
         PreparedStatement stmt = null;
+        StringBuilder sb = new StringBuilder();
         try{
             String sqlQuery = "SELECT m.mid, m.description, m.costprice, COUNT(p.pid), coalesce(SUM(p.numberofguests),0)\n" +
                               "FROM Menu m\n" +
@@ -19,14 +20,16 @@ class MenuReport {
             stmt = c.prepareStatement(sqlQuery);
             stmt.setInt(1, inputmid);
             ResultSet rs = stmt.executeQuery();
-            System.out.println("\nMENU REPORT:\n");
-            while(rs.next()){
-                System.out.println("Menu ID: " + rs.getInt(1));
-                System.out.println("Menu description: " + rs.getString(2));
-                System.out.println("Menu cost per person: £" + rs.getString(3));
-                System.out.println("Total number of parties: " + rs.getInt(4));
-                System.out.println("Total number of guests: " + rs.getInt(5));
-
+            if(!rs.next()){
+                sb.append("null");
+            }
+            else{
+                sb.append("\nMENU REPORT:\n");
+                sb.append("\nMenu ID: " + rs.getInt(1) + "\n");
+                sb.append("Menu description: " + rs.getString(2) + "\n");
+                sb.append("Menu cost per person: £" + rs.getString(3) + "\n");
+                sb.append("Total number of parties: " + rs.getInt(4) + "\n");
+                sb.append("Total number of guests: " + rs.getInt(5) + "\n");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -37,5 +40,6 @@ class MenuReport {
                 e.printStackTrace();
             }
         }
+        return sb.toString();
     }
 }

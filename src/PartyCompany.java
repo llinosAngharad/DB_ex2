@@ -24,7 +24,7 @@ public class PartyCompany {
                         PartyReport pr = new PartyReport(n);
                         String returnString = pr.makeReport(c);
                         if(returnString.equals("null")){
-                            System.out.println("Input error. Please try again:");
+                            System.out.println("Input error. Please try again:\n");
                         }
                         else{
                             System.out.println(returnString);
@@ -35,9 +35,18 @@ public class PartyCompany {
                 }
                 else if(n==2){
                     System.out.println("Enter the id of the menu required:\n");
-                    n = reader.nextInt();
-                    MenuReport mr = new MenuReport(n);
-                    mr.makeReport(c);
+                    while(true){
+                        n = reader.nextInt();
+                        MenuReport mr = new MenuReport(n);
+                        String returnString = mr.makeReport(c);
+                        if(returnString.equals("null")){
+                            System.out.println("Input error. Please try again:\n");
+                        }
+                        else{
+                            System.out.println(returnString);
+                            break;
+                        }
+                    }
                     break;
                 }
                 else if(n==3){
