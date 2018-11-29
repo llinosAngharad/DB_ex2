@@ -7,28 +7,14 @@ class Populate {
 
     void dropTables(Connection c) throws SQLException {
         Statement stmt= c.createStatement();
-        String drop = "DROP TABLE ";
-
+        String SQLQuery = "DROP SCHEMA public CASCADE;" +
+                          "CREATE SCHEMA public;";
         try{
-            stmt.execute(drop + " Party");
+            stmt.execute(SQLQuery);
         }catch(SQLException e){
-            System.out.println("Party table does not exist\n");
+            System.out.println("Tables do not exist\n");
         }
-        try{
-            stmt.execute(drop + " Venue");
-        }catch(SQLException e){
-            System.out.println("Venue table does not exist\n");
-        }
-        try{
-            stmt.execute(drop + " Menu");
-        }catch(SQLException e){
-            System.out.println("Menu table does not exist\n");
-        }
-        try{
-            stmt.execute(drop + " Entertainment");
-        }catch(SQLException e){
-            System.out.println("Entertainment table does not exist\n");
-        }finally {
+        finally {
             try{
                 stmt.close();
             }catch(SQLException e){
@@ -36,8 +22,6 @@ class Populate {
             }
         }
         System.out.println("Tables cleared");
-
-
     }
 
     void createTables(Connection c){
