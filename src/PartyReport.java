@@ -28,34 +28,40 @@ public class PartyReport {
                 nog = rs.getInt("numberofguests");
                 partyPrice = rs.getInt("price");
             }
-            rs = stmt.executeQuery("SELECT name, price\n" +
+            rs = stmt.executeQuery("SELECT name, venuecost\n" +
                     "                    FROM Venue\n" +
                     "                    WHERE vid IN(SELECT vid\n" +
                     "                                FROM Party\n" +
                     "                                WHERE pid =" + inputpid + ")");
             while(rs.next()){
                 System.out.println("Venue name: " + rs.getString("name"));
-                vPrice = rs.getInt("price");
+                vPrice = rs.getInt("venuecost");
 
             }
-            rs = stmt.executeQuery("SELECT description\n" +
+            rs = stmt.executeQuery("SELECT description, costprice\n" +
                     "                    FROM Menu\n" +
                     "                    WHERE mid IN(SELECT mid\n" +
                     "                                 FROM Party\n" +
                     "                                 WHERE pid =" + inputpid + ")");
             while(rs.next()){
                 System.out.println("Menu description: " + rs.getString("description"));
+                mPrice = rs.getInt("costprice");
             }
-            rs = stmt.executeQuery("SELECT description\n" +
+            rs = stmt.executeQuery("SELECT description, costprice\n" +
                     "                    FROM Entertainment\n" +
                     "                    WHERE eid IN(SELECT eid\n" +
                     "                                 FROM Party\n" +
                     "                                 WHERE pid =" + inputpid + ")");
             while(rs.next()){
                 System.out.println("Entertainment description: " + rs.getString("description"));
+                ePrice = rs.getInt("costprice");
             }
             System.out.println("Number of guests:" + nog);
             System.out.println("Price charged: £" + partyPrice);
+            int totalCost = vPrice + ePrice + (mPrice*nog);
+            System.out.println("Total cost price: £" + totalCost);
+            int netProfit = partyPrice - totalCost;
+            System.out.println("Net profit: £" + netProfit);
 
         }catch(SQLException e){
             e.printStackTrace();

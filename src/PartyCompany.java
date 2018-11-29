@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.sql.*;
 public class PartyCompany {
     public static void main(String args[]){
@@ -7,8 +8,10 @@ public class PartyCompany {
             Connection c = connect.getConnection();
 //            p.populateTables(c);
 
-            PartyReport pr = new PartyReport(1);
+            PartyReport pr = new PartyReport(5);
             pr.makeReport(c);
+
+            Menu
 
 
         }catch(SQLException e){

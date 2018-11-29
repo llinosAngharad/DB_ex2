@@ -38,7 +38,7 @@ class Populate {
             Statement stmt= c.createStatement();
 
             String SQLCreateVenue = "CREATE TABLE Venue(\n" +
-                    "    vid         SERIAL  PRIMARY KEY,\n" +
+                    "    vid         SERIAL      PRIMARY KEY,\n" +
                     "    name        CHAR(20)    NOT NULL,\n" +
                     "    venuecost   INTEGER     NOT NULL CHECK (venuecost > 0),\n" +
                     "    maxcapacity INTEGER     NOT NULL CHECK (maxcapacity > 0)\n" +
@@ -118,9 +118,10 @@ class Populate {
         try {
             String SQLInsertValue = "INSERT INTO Menu (description, costprice) VALUES (?, ?)";
 
-            ArrayList<String> menuDescriptionList = new ArrayList<>(Arrays.asList("Pan-fried Brussels Sprouts with Tofu Bacon", "Griddled leeks with hazelnut dressing", "Beetroot & squash Wellington",
-                    "Roasted stuffed cauliflower", "Nut roast with seasonal roast vegetables", "Christmas pudding ice cream",
-                    "Chestnut pate strudel with sauce", "Cranberry and pine nut stuffing", "Maple-roast parsnips and carrots", "Red cabbage & kale salad"));
+            ArrayList<String> menuDescriptionList = new ArrayList<>(Arrays.asList("Around the world christmas dinner",
+                    "Traditional christmas dinner with all the trimmings", "Vegan christmas delights",
+                    "Essential christmas nibbles", "4 course christmas lunch", "Christmas desserts extravaganza",
+                    "Christmas special bundle", "Cheese boards and wines", "Santa's christmas dinner party", "Kid's christmas special"));
 
             PreparedStatement stmt = c.prepareStatement(SQLInsertValue);
 
