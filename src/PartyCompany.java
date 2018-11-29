@@ -4,18 +4,26 @@ public class PartyCompany {
     public static void main(String args[]){
         Connect connect = new Connect("lxw404", "6yl8m7fncq");
         Populate p = new Populate();
+        Connection c = null;
         try {
-            Connection c = connect.getConnection();
+            c = connect.getConnection();
 //            p.populateTables(c);
 
-            PartyReport pr = new PartyReport(5);
-            pr.makeReport(c);
+//            PartyReport pr = new PartyReport(5);
+//            pr.makeReport(c);
 
-            Menu
+            MenuReport mr = new MenuReport(1);
+            mr.makeReport(c);
 
 
         }catch(SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                c.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 

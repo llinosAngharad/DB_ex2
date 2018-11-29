@@ -11,8 +11,9 @@ public class PartyReport {
     }
 
     void makeReport(Connection c){
+        Statement stmt = null;
         try{
-            Statement stmt = c.createStatement();
+            stmt = c.createStatement();
             int nog = 0;
             int partyPrice = 0;
             int vPrice = 0;
@@ -65,6 +66,12 @@ public class PartyReport {
 
         }catch(SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                stmt.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -28,14 +28,22 @@ class Populate {
             stmt.execute(drop + " Entertainment");
         }catch(SQLException e){
             System.out.println("Entertainment table does not exist\n");
+        }finally {
+            try{
+                stmt.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
         System.out.println("Tables cleared");
+
 
     }
 
     void createTables(Connection c){
+        Statement stmt = null;
         try{
-            Statement stmt= c.createStatement();
+            stmt= c.createStatement();
 
             String SQLCreateVenue = "CREATE TABLE Venue(\n" +
                     "    vid         SERIAL      PRIMARY KEY,\n" +
@@ -81,16 +89,23 @@ class Populate {
             System.out.println("Tables created\n");
         } catch(SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                stmt.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
 
     }
 
     void createTestVenues(Connection c) {
+        PreparedStatement stmt = null;
         try {
             String SQLInsertValue = "INSERT INTO Venue (name, venuecost, maxcapacity) " +
                     "VALUES (?, ?, ?)";
 
-            PreparedStatement stmt = c.prepareStatement(SQLInsertValue);
+            stmt = c.prepareStatement(SQLInsertValue);
             ArrayList<String> venueNameList = new ArrayList<>(Arrays.asList("Guild of Students", "O2 Academy", "The Jam House", "The Bristol Pear", "Ikon Gallery", "Hare & Hounds",
                     "Birmingham Town Hall", "Party Central", "NEC", "The S'Oak"));
 
@@ -111,10 +126,17 @@ class Populate {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                stmt.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 
     void createTestMenus(Connection c) {
+        PreparedStatement stmt = null;
         try {
             String SQLInsertValue = "INSERT INTO Menu (description, costprice) VALUES (?, ?)";
 
@@ -123,7 +145,7 @@ class Populate {
                     "Essential christmas nibbles", "4 course christmas lunch", "Christmas desserts extravaganza",
                     "Christmas special bundle", "Cheese boards and wines", "Santa's christmas dinner party", "Kid's christmas special"));
 
-            PreparedStatement stmt = c.prepareStatement(SQLInsertValue);
+            stmt = c.prepareStatement(SQLInsertValue);
 
             for (int i = 0; i < 100; i++) {
                 Random rand = new Random();
@@ -140,17 +162,24 @@ class Populate {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                stmt.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 
     void createTestEntertainment(Connection c) {
+        PreparedStatement stmt = null;
         try {
             String SQLInsertValue = "INSERT INTO Entertainment (description, costprice) VALUES (?, ?)";
 
             ArrayList<String> descriptionList = new ArrayList<>(Arrays.asList("Michael Buble", "Mariah Carey", "Wham!", "The Jackson 5",
                     "Diana Ross", "Frank Sinatra Tribute Act", "The Birmingham Christmas Choir", "Bing Crosby", "RuPaul", "Snoop Dogg"));
 
-            PreparedStatement stmt = c.prepareStatement(SQLInsertValue);
+            stmt = c.prepareStatement(SQLInsertValue);
 
             for (int i = 0; i < 100; i++) {
                 Random rand = new Random();
@@ -167,10 +196,17 @@ class Populate {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                stmt.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 
     void createTestParties(Connection c) {
+        PreparedStatement stmt = null;
         try {
             String SQLInsertValue = "INSERT INTO party (name, mid, vid, eid, price, timing, numberofguests)" +
                     "                VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -180,7 +216,7 @@ class Populate {
                     Timestamp.valueOf("2018-12-18 15:30:00.000000000"), Timestamp.valueOf("2018-12-12 09:00:00.000000000"), Timestamp.valueOf("2018-12-11 17:15:00.000000000"),
                     Timestamp.valueOf("2018-12-25 09:00:00.000000000"), Timestamp.valueOf("2018-12-16 18:00:00.000000000")));
 
-            PreparedStatement stmt = c.prepareStatement(SQLInsertValue);
+            stmt = c.prepareStatement(SQLInsertValue);
 
             for (int i = 0; i < 1000; i++) {
                 Random rand = new Random();
@@ -208,6 +244,12 @@ class Populate {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                stmt.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 
