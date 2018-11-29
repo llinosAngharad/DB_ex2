@@ -31,6 +31,7 @@ public class PartyCompany {
                             break;
                         }
                     }
+                    break;
                 }
                 else if(n==2){
                     System.out.println("Enter the id of the menu required:\n");

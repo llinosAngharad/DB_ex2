@@ -31,16 +31,16 @@ public class PartyReport {
             }
             else{
                 sb.append("\nPARTY REPORT:\n");
-                sb.append("Party ID: " + rs.getInt(1) + "\n");
+                sb.append("\nParty ID: " + rs.getInt(1) + "\n");
                 sb.append("Party name: " + rs.getString(2)+"\n");
                 nog = rs.getInt(3);
                 partyPrice = rs.getInt(4);
                 sb.append("Venue name: " + rs.getString(5)+"\n");
-                sb.append("Menu description: " + rs.getString(7)+"\n");
                 vPrice = rs.getInt(6);
+                sb.append("Menu description: " + rs.getString(7)+"\n");
                 mPrice = rs.getInt(8);
-                sb.append("Entertainment description: " + rs.getString("description")+"\n");
-                ePrice = rs.getInt("costprice");
+                sb.append("Entertainment description: " + rs.getString(9)+"\n");
+                ePrice = rs.getInt(10);
 
                 sb.append("Number of guests:" + nog + "\n");
                 sb.append("Price charged: £" + partyPrice +"\n");
