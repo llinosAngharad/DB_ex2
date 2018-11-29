@@ -20,10 +20,7 @@ class MenuReport {
             stmt = c.prepareStatement(sqlQuery);
             stmt.setInt(1, inputmid);
             ResultSet rs = stmt.executeQuery();
-            if(!rs.next()){
-                sb.append("null");
-            }
-            else{
+            while(rs.next()){
                 sb.append("\nMENU REPORT:\n");
                 sb.append("\nMenu ID: " + rs.getInt(1) + "\n");
                 sb.append("Menu description: " + rs.getString(2) + "\n");

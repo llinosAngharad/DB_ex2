@@ -23,7 +23,7 @@ public class PartyCompany {
                         n = reader.nextInt();
                         PartyReport pr = new PartyReport(n);
                         String returnString = pr.makeReport(c);
-                        if(returnString.equals("null")){
+                        if(returnString.equals("")){
                             System.out.println("Input error. Please try again:\n");
                         }
                         else{
@@ -39,7 +39,7 @@ public class PartyCompany {
                         n = reader.nextInt();
                         MenuReport mr = new MenuReport(n);
                         String returnString = mr.makeReport(c);
-                        if(returnString.equals("null")){
+                        if(returnString.equals("")){
                             System.out.println("Input error. Please try again:\n");
                         }
                         else{

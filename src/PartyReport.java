@@ -26,10 +26,7 @@ public class PartyReport {
             int ePrice = 0;
             stmt.setInt(1, inputpid);
             ResultSet rs = stmt.executeQuery();
-            if(!rs.next()){
-                sb.append("null");
-            }
-            else{
+            while(rs.next()){
                 sb.append("\nPARTY REPORT:\n");
                 sb.append("\nParty ID: " + rs.getInt(1) + "\n");
                 sb.append("Party name: " + rs.getString(2)+"\n");
