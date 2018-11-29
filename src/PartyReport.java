@@ -10,60 +10,45 @@ public class PartyReport {
         inputpid = pid;
     }
 
-    void makeReport(Connection c){
-        Statement stmt = null;
+    String makeReport(Connection c){
+        PreparedStatement stmt = null;
+        StringBuilder sb = new StringBuilder();
         try{
-            stmt = c.createStatement();
+            String sqlQuery = "SELECT p.pid, p.name, p.numberofguests, p.price, v.name, v.venuecost, m.description, m.costprice, e.description, e.costprice\n" +
+                              "FROM\n" +
+                                "Party p, Venue v, Menu m, entertainment e\n" +
+                                "WHERE p.vid = v.vid and p.mid = m.mid and p.eid = e.eid and p.pid = ?";
+            stmt = c.prepareStatement(sqlQuery);
             int nog = 0;
             int partyPrice = 0;
             int vPrice = 0;
             int mPrice = 0;
             int ePrice = 0;
-            ResultSet rs = stmt.executeQuery("SELECT pid, name, numberofguests, price" +
-                    "                              FROM Party" +
-                    "                              WHERE pid=" + inputpid);
-            System.out.println("\nPARTY REPORT:\n");
-            while(rs.next()){
-                System.out.println("Party ID: " + rs.getInt("pid"));
-                System.out.println("Party name: " + rs.getString("name"));
-                nog = rs.getInt("numberofguests");
-                partyPrice = rs.getInt("price");
+            stmt.setInt(1, inputpid);
+            ResultSet rs = stmt.executeQuery();
+            if(!rs.next()){
+                sb.append("null");
             }
-            rs = stmt.executeQuery("SELECT name, venuecost\n" +
-                    "                    FROM Venue\n" +
-                    "                    WHERE vid IN(SELECT vid\n" +
-                    "                                FROM Party\n" +
-                    "                                WHERE pid =" + inputpid + ")");
-            while(rs.next()){
-                System.out.println("Venue name: " + rs.getString("name"));
-                vPrice = rs.getInt("venuecost");
-
-            }
-            rs = stmt.executeQuery("SELECT description, costprice\n" +
-                    "                    FROM Menu\n" +
-                    "                    WHERE mid IN(SELECT mid\n" +
-                    "                                 FROM Party\n" +
-                    "                                 WHERE pid =" + inputpid + ")");
-            while(rs.next()){
-                System.out.println("Menu description: " + rs.getString("description"));
-                mPrice = rs.getInt("costprice");
-            }
-            rs = stmt.executeQuery("SELECT description, costprice\n" +
-                    "                    FROM Entertainment\n" +
-                    "                    WHERE eid IN(SELECT eid\n" +
-                    "                                 FROM Party\n" +
-                    "                                 WHERE pid =" + inputpid + ")");
-            while(rs.next()){
-                System.out.println("Entertainment description: " + rs.getString("description"));
+            else{
+                sb.append("\nPARTY REPORT:\n");
+                sb.append("Party ID: " + rs.getInt(1) + "\n");
+                sb.append("Party name: " + rs.getString(2)+"\n");
+                nog = rs.getInt(3);
+                partyPrice = rs.getInt(4);
+                sb.append("Venue name: " + rs.getString(5)+"\n");
+                sb.append("Menu description: " + rs.getString(7)+"\n");
+                vPrice = rs.getInt(6);
+                mPrice = rs.getInt(8);
+                sb.append("Entertainment description: " + rs.getString("description")+"\n");
                 ePrice = rs.getInt("costprice");
-            }
-            System.out.println("Number of guests:" + nog);
-            System.out.println("Price charged: £" + partyPrice);
-            int totalCost = vPrice + ePrice + (mPrice*nog);
-            System.out.println("Total cost price: £" + totalCost);
-            int netProfit = partyPrice - totalCost;
-            System.out.println("Net profit: £" + netProfit);
 
+                sb.append("Number of guests:" + nog + "\n");
+                sb.append("Price charged: £" + partyPrice +"\n");
+                int totalCost = vPrice + ePrice + (mPrice*nog);
+                sb.append("Total cost price: £" + totalCost + "\n");
+                int netProfit = partyPrice - totalCost;
+                sb.append("Net profit: £" + netProfit + "\n");
+            }
         }catch(SQLException e){
             e.printStackTrace();
         }finally {
@@ -73,5 +58,6 @@ public class PartyReport {
                 e.printStackTrace();
             }
         }
+        return sb.toString();
     }
 }
