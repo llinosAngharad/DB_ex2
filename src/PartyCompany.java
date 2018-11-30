@@ -1,6 +1,3 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import java.awt.*;
 import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,13 +20,13 @@ public class PartyCompany {
                 int n = reader.nextInt();
 
                 if(n==1){
-                    System.out.println("Enter the id of the party required:");
+                    System.out.println("\nEnter the id of the party required:");
                     while(true){
                         n = reader.nextInt();
                         PartyReport pr = new PartyReport(n);
                         String returnString = pr.makeReport(c);
                         if(returnString.equals("")){
-                            System.out.println("Input error. Please try again:\n");
+                            System.out.println("\nInput error. Please enter a valid party ID:");
                         }
                         else{
                             System.out.println(returnString);
@@ -40,13 +37,13 @@ public class PartyCompany {
                 }
 
                 else if(n==2){
-                    System.out.println("Enter the id of the menu required:");
+                    System.out.println("\nEnter the id of the menu required:");
                     while(true){
                         n = reader.nextInt();
                         MenuReport mr = new MenuReport(n);
                         String returnString = mr.makeReport(c);
                         if(returnString.equals("")){
-                            System.out.println("Input error. Please try again:\n");
+                            System.out.println("Input error. Please enter a valid menu ID:\n");
                         }
                         else{
                             System.out.println(returnString);
@@ -58,7 +55,6 @@ public class PartyCompany {
 
                 else if(n==3){
                     PartyInsertion pi = null;
-                    Boolean again = true;
                     try{
                         System.out.println("Please input the following:\n");
                         System.out.println("Party ID: ");
@@ -84,7 +80,6 @@ public class PartyCompany {
 
                         pi = new PartyInsertion();
                         pi.insertParty(c, pid, pName, mid, vid, eid, partyPrice, timing, nog);
-                        again = false;
                     }catch(SQLException e){
                         System.out.println("\nOops! There was an error with the input.");
                         System.err.println(e.getLocalizedMessage());

@@ -27,7 +27,9 @@ public class PartyReport {
             stmt.setInt(1, inputpid);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                sb.append("\nPARTY REPORT:\n");
+                sb.append("\n-------------");
+                sb.append("\nPARTY REPORT:");
+                sb.append("\n-------------");
                 sb.append("\nParty ID: " + rs.getInt(1) + "\n");
                 sb.append("Party name: " + rs.getString(2)+"\n");
                 nog = rs.getInt(3);

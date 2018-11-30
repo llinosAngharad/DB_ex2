@@ -21,7 +21,9 @@ class MenuReport {
             stmt.setInt(1, inputmid);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                sb.append("\nMENU REPORT:\n");
+                sb.append("\n------------");
+                sb.append("\nMENU REPORT:");
+                sb.append("\n------------");
                 sb.append("\nMenu ID: " + rs.getInt(1) + "\n");
                 sb.append("Menu description: " + rs.getString(2) + "\n");
                 sb.append("Menu cost per person: £" + rs.getString(3) + "\n");

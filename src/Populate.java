@@ -21,7 +21,7 @@ class Populate {
                 e.printStackTrace();
             }
         }
-        System.out.println("Tables cleared");
+        System.out.println("Test tables cleared");
     }
 
     void createTables(Connection c){
@@ -30,26 +30,26 @@ class Populate {
             stmt= c.createStatement();
 
             String SQLCreateVenue = "CREATE TABLE Venue(\n" +
-                    "    vid         SERIAL      PRIMARY KEY,\n" +
+                    "    vid         SERIAL      PRIMARY KEY CHECK(vid > 0),\n" +
                     "    name        CHAR(20)    NOT NULL,\n" +
-                    "    venuecost   INTEGER     NOT NULL CHECK (venuecost > 0),\n" +
+                    "    venuecost   INTEGER     NOT NULL CHECK (venuecost >= 0),\n" +
                     "    maxcapacity INTEGER     NOT NULL CHECK (maxcapacity > 0)\n" +
                     ")";
 
             String SQLCreateMenu = 	"CREATE TABLE Menu(\n" +
-                    "    mid             SERIAL      PRIMARY KEY,\n" +
+                    "    mid             SERIAL      PRIMARY KEY CHECK(mid >0),\n" +
                     "    description     CHAR(100)   NOT NULL,\n" +
-                    "    costprice       INTEGER     NOT NULL CHECK (costprice > 0)\n" +
+                    "    costprice       INTEGER     NOT NULL CHECK (costprice >= 0)\n" +
                     ")";
 
             String SQLCreateEntertainment = "CREATE TABLE Entertainment(\n" +
-                    "    eid             SERIAL          PRIMARY KEY,\n" +
+                    "    eid             SERIAL          PRIMARY KEY CHECK(eid > 0),\n" +
                     "    description     CHAR(100)       NOT NULL,\n" +
-                    "    costprice       INTEGER         NOT NULL CHECK (costprice > 0)\n" +
+                    "    costprice       INTEGER         NOT NULL CHECK (costprice >= 0)\n" +
                     ")";
 
             String SQLCreateParty = "CREATE TABLE Party(\n" +
-                    "    pid                 SERIAL          PRIMARY KEY,\n" +
+                    "    pid                 SERIAL          PRIMARY KEY CHECK(pid > 0),\n" +
                     "    name                CHAR(20)        NOT NULL,\n" +
                     "    mid                 INTEGER         NOT NULL,\n" +
                     "    vid                 INTEGER         NOT NULL,\n" +
@@ -70,7 +70,7 @@ class Populate {
             stmt.execute(SQLCreateMenu);
             stmt.execute(SQLCreateEntertainment);
             stmt.execute(SQLCreateParty);
-            System.out.println("Tables created\n");
+            System.out.println("Test tables created\n");
         } catch(SQLException e){
             e.printStackTrace();
         }finally {
@@ -106,7 +106,7 @@ class Populate {
                 stmt.addBatch();
             }
             stmt.executeBatch();
-            System.out.println("Test venue table created");
+            System.out.println("Test venue table");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -142,7 +142,7 @@ class Populate {
                 stmt.addBatch();
             }
             stmt.executeBatch();
-            System.out.println("Test menu table created");
+            System.out.println("Test menu table");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -176,7 +176,7 @@ class Populate {
                 stmt.addBatch();
             }
             stmt.executeBatch();
-            System.out.println("Test entertainment table created");
+            System.out.println("Test entertainment table");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -224,7 +224,7 @@ class Populate {
                 stmt.addBatch();
             }
             stmt.executeBatch();
-            System.out.println("Test party table created");
+            System.out.println("Test party table");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -241,6 +241,7 @@ class Populate {
         try{
             dropTables(c);
             createTables(c);
+            System.out.println("Populating...");
             createTestVenues(c);
             createTestMenus(c);
             createTestEntertainment(c);
