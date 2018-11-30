@@ -1,5 +1,8 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.awt.*;
 import java.sql.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PartyCompany {
@@ -20,7 +23,7 @@ public class PartyCompany {
                 int n = reader.nextInt();
 
                 if(n==1){
-                    System.out.println("Enter the id of the party required:\n");
+                    System.out.println("Enter the id of the party required:");
                     while(true){
                         n = reader.nextInt();
                         PartyReport pr = new PartyReport(n);
@@ -35,8 +38,9 @@ public class PartyCompany {
                     }
                     break;
                 }
+
                 else if(n==2){
-                    System.out.println("Enter the id of the menu required:\n");
+                    System.out.println("Enter the id of the menu required:");
                     while(true){
                         n = reader.nextInt();
                         MenuReport mr = new MenuReport(n);
@@ -51,9 +55,12 @@ public class PartyCompany {
                     }
                     break;
                 }
+
                 else if(n==3){
-                    System.out.println("Please input the following:\n");
-                    while(true){
+                    PartyInsertion pi = null;
+                    Boolean again = true;
+                    try{
+                        System.out.println("Please input the following:\n");
                         System.out.println("Party ID: ");
                         int pid = reader.nextInt();
                         reader.nextLine();
@@ -65,24 +72,37 @@ public class PartyCompany {
                         int vid = reader.nextInt();
                         System.out.println("\nEntertainment ID: ");
                         int eid = reader.nextInt();
-                        System.out.println("\nQuoted price: £");
+                        System.out.println("\nQuoted price (£):");
                         int partyPrice = reader.nextInt();
+                        reader.nextLine();
+                        System.out.println("\nTiming (yyyy-mm-dd hh:mm):");
+                        String stringTime = reader.nextLine();
+                        stringTime += ":00.000000000";
+                        Timestamp timing = Timestamp.valueOf(stringTime);
                         System.out.println("\nNumber of guests");
                         int nog = reader.nextInt();
 
-                        PartyInsertion pi = new PartyInsertion();
-                        String returnString = pi.insertParty(c, pid, pName, mid, vid, eid, partyPrice, nog);
-
-                        if(returnString.equals("")){
-                            System.out.println("Input error. Please try again:\n");
-                        }
-                        else{
-                            System.out.println(returnString);
-                            break;
+                        pi = new PartyInsertion();
+                        pi.insertParty(c, pid, pName, mid, vid, eid, partyPrice, timing, nog);
+                        again = false;
+                    }catch(SQLException e){
+                        System.out.println("\nOops! There was an error with the input.");
+                        System.err.println(e.getLocalizedMessage());
+                    }
+                    catch(IllegalArgumentException e){
+                        System.out.println("\nOops! There was an error with the input.");
+                        System.err.println(e.getLocalizedMessage());
+                    }catch(InputMismatchException e){
+                        System.out.println("\nOops! There was an error with the input.");
+                        e.printStackTrace();
+                    }finally{
+                        if(pi!=null){
+                            pi.close();
                         }
                     }
                     break;
                 }
+
                 else{
                     System.out.println("Input error. Please select one of the following options:\n" +
                                       "   1. Get party report\n" +
