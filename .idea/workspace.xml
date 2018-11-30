@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d0ce1c9-0816-43c7-bbe6-5d445c76531a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/PartyCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PartyCompany.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Populate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Populate.java" afterDir="false" />
-    </list>
+    <list default="true" id="0d0ce1c9-0816-43c7-bbe6-5d445c76531a" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -158,10 +155,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="-1104" />
-    <option name="y" value="-1080" />
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -199,7 +194,7 @@
     <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543527252279" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543527253437" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -253,18 +248,18 @@
       <workItem from="1543400373634" duration="3232000" />
       <workItem from="1543404433823" duration="5828000" />
       <workItem from="1543416824712" duration="17413000" />
-      <workItem from="1543508966273" duration="15701000" />
+      <workItem from="1543508966273" duration="15883000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46385000" />
+    <option name="totallyTimeSpent" value="46567000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1104" y="-1080" width="1920" height="1080" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.056975506" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.076537915" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -273,7 +268,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25247526" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30722892" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -293,7 +288,7 @@
       <window_info anchor="right" id="Maven" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Database" order="8" visible="true" weight="0.14323749" />
+      <window_info anchor="right" id="Database" order="8" visible="true" weight="0.19241774" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
