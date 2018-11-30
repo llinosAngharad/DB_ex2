@@ -12,7 +12,7 @@ public class PartyCompany {
         try {
             c = connect.getConnection();
             p.populateTables(c);
-            System.out.println("Hello there! Please select an option:\n" +
+            System.out.println("\nHello there! Please select an option:\n" +
                     "   1. Get party report\n" +
                     "   2. Get menu report\n" +
                     "   3. Insert a new party\n");
@@ -53,25 +53,34 @@ public class PartyCompany {
                 }
                 else if(n==3){
                     System.out.println("Please input the following:\n");
-                    System.out.println("Party ID: ");
-                    int pid = reader.nextInt();
-                    reader.nextLine();
-                    System.out.println("\nParty's name: ");
-                    String pName = reader.nextLine();
-                    System.out.println("\nMenu ID: ");
-                    int mid = reader.nextInt();
-                    System.out.println("\nVenue ID: ");
-                    int vid = reader.nextInt();
-                    System.out.println("\nEntertainment ID: ");
-                    int eid = reader.nextInt();
-                    System.out.println("\nQuoted price: £");
-                    int partyPrice = reader.nextInt();
-                    System.out.println("\nNumber of guests");
-                    int nog = reader.nextInt();
+                    while(true){
+                        System.out.println("Party ID: ");
+                        int pid = reader.nextInt();
+                        reader.nextLine();
+                        System.out.println("\nParty's name: ");
+                        String pName = reader.nextLine();
+                        System.out.println("\nMenu ID: ");
+                        int mid = reader.nextInt();
+                        System.out.println("\nVenue ID: ");
+                        int vid = reader.nextInt();
+                        System.out.println("\nEntertainment ID: ");
+                        int eid = reader.nextInt();
+                        System.out.println("\nQuoted price: £");
+                        int partyPrice = reader.nextInt();
+                        System.out.println("\nNumber of guests");
+                        int nog = reader.nextInt();
 
-                    System.out.println(pid + "\n" + pName + "\n" + mid + "\n" + vid + "\n" + eid + "\n" + partyPrice + "\n" + nog);
+                        PartyInsertion pi = new PartyInsertion();
+                        String returnString = pi.insertParty(c, pid, pName, mid, vid, eid, partyPrice, nog);
 
-
+                        if(returnString.equals("")){
+                            System.out.println("Input error. Please try again:\n");
+                        }
+                        else{
+                            System.out.println(returnString);
+                            break;
+                        }
+                    }
                     break;
                 }
                 else{

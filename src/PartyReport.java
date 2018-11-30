@@ -19,11 +19,11 @@ public class PartyReport {
                                 "Party p, Venue v, Menu m, entertainment e\n" +
                                 "WHERE p.vid = v.vid and p.mid = m.mid and p.eid = e.eid and p.pid = ?";
             stmt = c.prepareStatement(sqlQuery);
-            int nog = 0;
-            int partyPrice = 0;
-            int vPrice = 0;
-            int mPrice = 0;
-            int ePrice = 0;
+            int nog;
+            int partyPrice;
+            int vPrice;
+            int mPrice;
+            int ePrice;
             stmt.setInt(1, inputpid);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
